@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardim do Amanhã | Cultivo Sustentável</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="imagens/favicon.io.png" type="image/x-icon">
+    <style>
+        /* Reset e Variáveis */
+        :root {
+            --primary-green: #2d5a27;
+            --light-green: #e9f5db;
+            --accent-color: #718355;
+            --dark-text: #1a1a1a;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: #fcfcfc;
+            scroll-behavior: smooth;
+        }
+
+        /* Navegação */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+
+        /* Banner Hero */
+        .hero {
+            height: 60vh;
+            min-height: 350px;
+            background-color: #2d5a27;
+            background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            padding-top: 80px; /* Compensa a navbar fixa */
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--primary-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            background: #1e3d1a;
+        }
+
+        /* Seções Gerais */
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--primary-green);
+        }
+
+        .info-section, .guide-section {
+            padding: 80px 8%;
+        }
+
+        /* Grid de Benefícios */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .basket-section { background-color: #f4f7f1; }
+        .basket-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .basket-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s; border: 1px solid #eee; }
+        .basket-card:hover { transform: translateY(-10px); }
+        .basket-img { height: 200px; background-size: cover; background-position: center; }
+        .basket-info { padding: 25px; text-align: center; }
+        .basket-info h3 { color: var(--basket-brown); margin-bottom: 10px; }
+        .price { font-size: 1.5rem; font-weight: bold; color: var(--primary-green); margin: 15px 0; display: block; }
+        
+        .btn-buy { display: inline-block; padding: 12px 30px; background: var(--primary-green); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; }
+        .btn-buy:hover { background: var(--basket-brown); }
+
+        .info-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .info-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Passos do Guia */
+        .step-by-step {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            background: var(--light-green);
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .step span {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            opacity: 0.4;
+        }
+
+        /* Tabela */
+        .table-container {
+            margin-top: 50px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Rodapé */
+        footer {
+            background: #1a2e18;
+            color: white;
+            padding: 50px 8%;
+            text-align: center;
+        }
+
+        .social-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            margin: 0 10px;
+        }
+
+        .social-link:hover {
+            color: #a8dadc;
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .navbar { flex-direction: column; padding: 15px; }
+            .nav-links { margin-top: 15px; }
+            .nav-links li { margin: 0 10px; }
+        }
+
+        @media (max-width: 600px) {
+            .hero { height: 50vh; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">🌿 Jardim do Amanhã</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#guia">Guia</a></li>
+                <li><a href="#cestas">Encomendar Cestas</a></li>
+                <li><a href="#beneficios">Benefícios</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Cultive o Futuro na sua Própria Casa</h1>
+            <p>Transforme pequenos espaços em fontes de vida, saúde e sustentabilidade.</p>
+            <a href="#cestas" class="btn-buy" style="background: var(--white); color: var(--primary-green); margin-top: 20px;">Ver Cestas Disponíveis</a>
+            
+        </div>
+    </section>
+
+    <section id="beneficios" class="info-section">
+        <h2 class="section-title">Por que cultivar em casa?</h2>
+        <div class="grid-container">
+            <div class="info-card">
+                <div class="icon">🥗</div>
+                <h3>Alimentação Saudável</h3>
+                <p>Tenha alimentos livres de agrotóxicos e colhidos na hora, garantindo o máximo de nutrientes.</p>
+            </div>
+            <div class="info-card">
+                <div class="icon">🧠</div>
+                <h3>Saúde Mental</h3>
+                <p>O contato com a terra reduz o estresse, a ansiedade e promove um estado de relaxamento.</p>
+            </div>
+            <div class="info-card">
+                <div class="icon">🌍</div>
+                <h3>Sustentabilidade</h3>
+                <p>Reduza sua pegada de carbono diminuindo o transporte de alimentos e o desperdício.</p>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="cestas" class="basket-section">
+        <h2 class="section-title">Nossas Cestas Orgânicas</h2>
+        <p style="text-align: center; margin-bottom: 40px; color: #555;">Não tem espaço para plantar? Nós levamos a colheita até você!</p>
+        
+        <div class="basket-grid">
+            <div class="basket-card">
+                <div class="basket-img" style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="basket-info">
+                    <h3>Cesta</h3>
+                    <p>Ideal para uma pessoa. Contém 5 itens da estação entre folhagens e temperos.</p>
+                    <span class="price">CONSULTE O PREÇO NO WHATSAPP</span>
+                    <a href="https://wa.me/11945279871" target="_blank" class="btn-buy">Encomendar via WhatsApp</a>
+                </div>
+            </div>
+
+        </div>
+
+          </section>
+
+    <section id="guia" class="guide-section">
+        <h2 class="section-title">Guia de Cultivo para Iniciantes</h2>
+        <div class="step-by-step">
+            <div class="step">
+                <span>01</span>
+                <h4>Escolha o Local</h4>
+                <p>Busque um local que receba pelo menos 4 horas de sol direto por dia (varandas ou janelas).</p>
+            </div>
+            <div class="step">
+                <span>02</span>
+                <h4>Prepare o Solo</h4>
+                <p><strong>Afofe:</strong> Deixe a terra solta. <br>
+                   <strong>Nutra:</strong> Use adubo orgânico. <br>
+                   <strong>Drene:</strong> Use pedras no fundo.</p>
+                <small>Dica: Terra úmida, nunca encharcada.</small>
+            </div>
+            <div class="step">
+                <span>03</span>
+                <h4>Escolha as Sementes</h4>
+                <p>Inicie com plantas fáceis: Manjericão, Hortelã, Alface ou Alecrim.</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h3 style="margin-bottom: 20px; color: var(--primary-green);">Tabela de Rega e Luz</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Planta</th>
+                        <th>Necessidade de Sol</th>
+                        <th>Frequência de Rega</th>
+                        <th>Dificuldade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Manjericão</td>
+                        <td>Sol Direto</td>
+                        <td>Diária (Solo Úmido)</td>
+                        <td>Fácil</td>
+                    </tr>
+                    <tr>
+                        <td>Suculentas</td>
+                        <td>Luz Indireta/Direta</td>
+                        <td>1x por semana</td>
+                        <td>Muito Fácil</td>
+                    </tr>
+                    <tr>
+                        <td>Tomate Cereja</td>
+                        <td>Sol Pleno</td>
+                        <td>Diária</td>
+                        <td>Média</td>
+                    </tr>
+                    <tr>
+                        <td>Hortelã</td>
+                        <td>Meia Sombra</td>
+                        <td>Frequente</td>
+                        <td>Fácil</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer id="contato">
+        <div class="footer-content">
+            <p><strong>Jardim do Amanhã</strong> - Criando raízes para um mundo melhor.</p>
+            <div class="social-icons" style="margin-top: 20px;">
+                <a href="https://www.instagram.com/luasog_" target="_blank" class="social-link">Instagram</a> | 
+                <span class="social-link">YouTube</span> | 
+                <span class="social-link">Pinterest</span> | 
+                <span class="social-link">WhatsApp</span>
+            </div>
+            <p style="margin-top: 10px;">E-mail:contato @jardimdoamanhasp.com</p>
+            <p class="copyright">&copy; 2026 Jardim do Amanhã. Desenvolvido com foco no Meio Ambiente.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
